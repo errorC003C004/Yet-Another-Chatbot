@@ -1,3 +1,4 @@
+# tempature is 0-2, higher is creativer 
 import os
 import json
 import queue
@@ -29,6 +30,22 @@ os.makedirs(CHATS_DIR, exist_ok=True)
 current_chat_name: Optional[str] = None
 CURRENT_CHAT_HISTORY_FILE: Optional[str] = None
 
+
+# =========================
+#         Debug
+# =========================
+JAN_MODEL_NAME = "Jan-v3.5-4B-Q4_K_XL"
+using_jan = False
+if using_jan:
+    from openai import OpenAI
+    client = OpenAI(
+    base_url="http://127.0.0.1:1337/v1",
+    api_key="not-needed"\
+)
+
+
+
+
 gpt_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 tts_client = ElevenLabs(api_key=os.getenv("ELEVEN_LABS_API_KEY"))
 VOICE_ID = os.getenv("ELEVEN_LABS_VOICE_ID")
@@ -56,7 +73,7 @@ class Preset:
     text_mode: bool = True
     ai_voice: bool = False
     AI_PERSONALITY: str = (
-        "You are Asuka Langley from English Evangelion Dub. "
+        "You are Monika from DDLC. "
         "Make responses short but with personality. Stay consistent. Be a bit nicer to the user."
         "*text* shows thoughts or actions."
     )
@@ -211,6 +228,26 @@ def generate_gpt_reply(text: str) -> str:
         messages = [{"role": "system", "content": AI_PERSONALITY}, *conversation_memory]
 
     try:
+        if using_jan:
+
+
+
+
+            response = client.chat.completions.create(
+                model=JAN_MODEL_NAME,
+                messages=messages,
+                temperature=1.0
+            )
+            reply = response.choices[0].message.content.strip()
+            with memory_lock:
+                conversation_memory.append({"role": "assistant", "content": reply})
+            save_chat_history()
+            return reply
+
+
+
+
+
         chat_completion = gpt_client.chat.completions.create(
             model=GROQ_MODEL,
             messages=messages,
