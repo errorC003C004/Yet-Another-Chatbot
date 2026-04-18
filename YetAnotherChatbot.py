@@ -35,12 +35,12 @@ CURRENT_CHAT_HISTORY_FILE: Optional[str] = None
 #         Debug
 # =========================
 JAN_MODEL_NAME = "Jan-v3.5-4B-Q4_K_XL"
-using_jan = False
+using_jan = True
 if using_jan:
     from openai import OpenAI
     client = OpenAI(
     base_url="http://127.0.0.1:1337/v1",
-    api_key="not-needed"\
+    api_key="not-needed"
 )
 
 
@@ -73,7 +73,7 @@ class Preset:
     text_mode: bool = True
     ai_voice: bool = False
     AI_PERSONALITY: str = (
-        "You are Monika from DDLC. "
+        "You are Asuka Langley Soryu from English Evangelion Dub. "
         "Make responses short but with personality. Stay consistent. Be a bit nicer to the user."
         "*text* shows thoughts or actions."
     )
