@@ -1,0 +1,10 @@
+elevenlabs==2.43.0
+faster_whisper==1.2.1
+groq==1.1.2
+numpy==2.4.4
+openai==2.32.0
+pyside6==6.10.1
+pyside6_addons==6.10.1
+pyside6_essentials==6.10.1
+python-dotenv==1.2.2
+sounddevice==0.5.1
